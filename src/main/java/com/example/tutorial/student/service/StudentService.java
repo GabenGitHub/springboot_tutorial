@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentService {
@@ -34,7 +35,7 @@ public class StudentService {
         }
     }
 
-    public void deleteStudent(Long studentId) {
+    public void deleteStudent(UUID studentId) {
         boolean existingStudent = studentRepository.existsById(studentId);
         if (!existingStudent) {
             throw new IllegalStateException("Student not found");
@@ -43,7 +44,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudent(Long studentId, Student student) {
+    public void updateStudent(UUID studentId, Student student) {
         Student studentToUpdate = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalStateException("Student doesn't exist"));
         if (student.getName() != null && student.getName().length() > 0 && !Objects.equals(studentToUpdate.getName(), student.getName())) {
