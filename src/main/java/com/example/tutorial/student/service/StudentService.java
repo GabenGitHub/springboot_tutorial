@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,11 @@ public class StudentService {
     public void updateStudent(Long studentId, Student student) {
         Student studentToUpdate = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalStateException("Student doesn't exist"));
-        studentToUpdate.setName(student.getName());
-        studentToUpdate.setEmail(student.getEmail());
+        if (student.getName() != null && student.getName().length() > 0 && !Objects.equals(studentToUpdate.getName(), student.getName())) {
+            studentToUpdate.setName(student.getName());
+        }
+        if (student.getEmail() != null && student.getEmail().length() > 0 && !Objects.equals(studentToUpdate.getEmail(), student.getEmail())) {
+            studentToUpdate.setEmail(student.getEmail());
+        }
     }
 }
