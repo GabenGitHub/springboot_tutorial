@@ -31,4 +31,12 @@ public class StudentService {
             throw new IllegalStateException("Email is taken");
         }
     }
+
+    public void deleteStudent(Long studentId) {
+        boolean existingStudent = studentRepository.existsById(studentId);
+        if (!existingStudent) {
+            throw new IllegalStateException("Student not found");
+        }
+        studentRepository.deleteById(studentId);
+    }
 }
