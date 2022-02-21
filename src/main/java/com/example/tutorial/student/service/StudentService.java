@@ -3,6 +3,10 @@ package com.example.tutorial.student.service;
 import com.example.tutorial.student.dao.StudentRepository;
 import com.example.tutorial.student.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,8 +25,17 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getStudents() {
-        return studentRepository.findAll();
+//    public List<Student> getStudents() {
+//        return studentRepository.findAll();
+//    }
+    public Page<Student> getStudents() {
+//        Pageable pageable = PageRequest.of(0, 2);
+        var order1 = new Sort.Order(Sort.Direction.ASC ,"name");
+        var order2 = new Sort.Order(Sort.Direction.ASC ,"email");
+        Sort sort = Sort.by(order1, order2);
+        Pageable pageable = PageRequest.of(0, 2, sort);
+
+        return studentRepository.findAll(pageable);
     }
 
     public void addStudent(Student student) {

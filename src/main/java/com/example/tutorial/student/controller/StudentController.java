@@ -3,6 +3,7 @@ package com.example.tutorial.student.controller;
 import com.example.tutorial.student.entity.Student;
 import com.example.tutorial.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents() {
+    public Page<Student> getStudents() {
         return studentService.getStudents();
     }
 
