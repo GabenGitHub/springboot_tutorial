@@ -10,10 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class StudentService {
@@ -28,14 +27,15 @@ public class StudentService {
 //    public List<Student> getStudents() {
 //        return studentRepository.findAll();
 //    }
-    public Page<Student> getStudents() {
+    public List<Student> getStudents() {
 //        Pageable pageable = PageRequest.of(0, 2);
         var order1 = new Sort.Order(Sort.Direction.ASC ,"name");
         var order2 = new Sort.Order(Sort.Direction.ASC ,"email");
         Sort sort = Sort.by(order1, order2);
         Pageable pageable = PageRequest.of(0, 2, sort);
 
-        return studentRepository.findAll(pageable);
+//        return studentRepository.findAll(pageable);
+        return studentRepository.findAllStudentBetweenAge(LocalDate.parse("1950-01-01"), LocalDate.parse("1990-01-01"));
     }
 
     public void addStudent(Student student) {
