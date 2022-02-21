@@ -54,4 +54,8 @@ public class StudentService {
             studentToUpdate.setEmail(student.getEmail());
         }
     }
+
+    public List<Student> getStudentsByName(String name) {
+        return studentRepository.findStudentByNameContains(name);
+    }
 }

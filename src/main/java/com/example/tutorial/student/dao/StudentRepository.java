@@ -1,6 +1,7 @@
 package com.example.tutorial.student.dao;
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, UUID> {
-    @Query("SELECT s FROM Student s WHERE s.email = ?1")
+//    @Query("SELECT s FROM Student s WHERE s.email = ?1")
     Optional<Student> findStudentByEmail(String email);
+    List<Student> findStudentByNameContains(String name);
 }
