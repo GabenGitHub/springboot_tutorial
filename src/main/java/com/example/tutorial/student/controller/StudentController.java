@@ -21,7 +21,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents() {
+    public Page<Student> getStudents() {
         return studentService.getStudents();
     }
 
@@ -43,6 +43,6 @@ public class StudentController {
 
     @GetMapping(path = "{name}")
     public List<Student> getStudentsByName(@PathVariable("name") String name) {
-        return studentService.getStudentsByName(name);
+        return studentService.getStudentsByFirstName(name);
     }
 }

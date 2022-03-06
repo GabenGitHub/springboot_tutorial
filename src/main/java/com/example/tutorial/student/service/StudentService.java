@@ -27,15 +27,15 @@ public class StudentService {
 //    public List<Student> getStudents() {
 //        return studentRepository.findAll();
 //    }
-    public List<Student> getStudents() {
-//        Pageable pageable = PageRequest.of(0, 2);
-        var order1 = new Sort.Order(Sort.Direction.ASC ,"name");
-        var order2 = new Sort.Order(Sort.Direction.ASC ,"email");
-        Sort sort = Sort.by(order1, order2);
-        Pageable pageable = PageRequest.of(0, 2, sort);
+    public Page<Student> getStudents() {
+        Pageable pageable = PageRequest.of(0, 2);
+//        var order1 = new Sort.Order(Sort.Direction.ASC ,"name");
+//        var order2 = new Sort.Order(Sort.Direction.ASC ,"email");
+//        Sort sort = Sort.by(order1, order2);
+//        Pageable pageable = PageRequest.of(0, 2, sort);
 
-//        return studentRepository.findAll(pageable);
-        return studentRepository.findAllStudentBetweenAge(LocalDate.parse("1950-01-01"), LocalDate.parse("1990-01-01"));
+        return studentRepository.findAll(pageable);
+//        return studentRepository.findAllStudentBetweenAge(LocalDate.parse("1950-01-01"), LocalDate.parse("1990-01-01"));
     }
 
     public void addStudent(Student student) {
@@ -60,15 +60,18 @@ public class StudentService {
     public void updateStudent(UUID studentId, Student student) {
         Student studentToUpdate = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalStateException("Student doesn't exist"));
-        if (student.getName() != null && student.getName().length() > 0 && !Objects.equals(studentToUpdate.getName(), student.getName())) {
-            studentToUpdate.setName(student.getName());
+        if (student.getFirstName() != null && student.getFirstName().length() > 0 && !Objects.equals(studentToUpdate.getFirstName(), student.getFirstName())) {
+            studentToUpdate.setFirstName(student.getFirstName());
+        }
+        if (student.getLastName() != null && student.getLastName().length() > 0 && !Objects.equals(studentToUpdate.getLastName(), student.getLastName())) {
+            studentToUpdate.setLastName(student.getLastName());
         }
         if (student.getEmail() != null && student.getEmail().length() > 0 && !Objects.equals(studentToUpdate.getEmail(), student.getEmail())) {
             studentToUpdate.setEmail(student.getEmail());
         }
     }
 
-    public List<Student> getStudentsByName(String name) {
-        return studentRepository.findStudentByNameContains(name);
+    public List<Student> getStudentsByFirstName(String name) {
+        return studentRepository.findStudentByFirstNameContains(name);
     }
 }
