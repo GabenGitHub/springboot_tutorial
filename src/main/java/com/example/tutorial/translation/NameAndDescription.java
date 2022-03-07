@@ -9,8 +9,10 @@ import javax.persistence.*;
 public abstract class NameAndDescription {
 
     @Column(name = "name")
-    private String name;
+    @Convert(converter = TranslationConverter.class)
+    private Translation name;
 
     @Column(name = "description")
-    private String description;
+    @Convert(converter = TranslationConverter.class)
+    private Translation description;
 }
