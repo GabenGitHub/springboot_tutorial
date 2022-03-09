@@ -2,7 +2,9 @@ package com.example.tutorial.translation;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.MappedSuperclass;
 
 @Data
 @MappedSuperclass

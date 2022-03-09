@@ -2,30 +2,30 @@ package com.example.tutorial.translation;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Converter(autoApply = true)
-public class TranslationConverter implements AttributeConverter<List<Translation>, String> {
+public class TranslationConverter implements AttributeConverter<Translation, String> {
     ObjectMapper mapper = new ObjectMapper();
 
 
     @Override
-    public String convertToDatabaseColumn(List<Translation> text) {
+    public String convertToDatabaseColumn(Translation text) {
         String json = "";
         try {
             if (text == null) {
                 return null;
             }
             // convert map to JSON string
-            json = mapper.writeValueAsString(text);
+            json = mapper.writeValueAsString(Collections.singletonList(text));
 
 
         } catch (JsonProcessingException e) {
@@ -36,17 +36,22 @@ public class TranslationConverter implements AttributeConverter<List<Translation
 
     @SneakyThrows
     @Override
-    public List<Translation> convertToEntityAttribute(String dbData) {
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    public Translation convertToEntityAttribute(String dbData) {
 
-
+//        [{"text": {"language": "en", "value": "Hungarian"}}, {"text": {"language": "hu", "value": "Magyar"}}]
+//        [{"text": {"en": "Hungarian"}}, {"text": {"hu": "Magyar"}}]
         if (dbData != null) {
             List<Translation> list = Arrays.asList(mapper.readValue(dbData, Translation[].class));
-            System.out.println(list.get(0));
-            return list;
+            var language = LocaleContextHolder.getLocaleContext().getLocale().getLanguage();
+            if (language == null) {
+                return null;
+            }
+
+            return list.stream().findFirst().orElse(null);
+//            return list.stream().filter(translation ->
+//                    translation.getText().containsKey(language)
+//            ).findFirst().orElse(null);
         }
-
-
         return null;
     }
 }

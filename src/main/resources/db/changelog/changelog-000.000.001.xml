@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="000.000.001-00067" author="gszabo">
+        <comment>Modify database</comment>
+        <!-- oszlopok létrehozása -->
+        <!--  -->
+
+        <!-- Dropping translation tables -->
+        <dropTable cascadeConstraints="true" tableName="translation"/>
+        <dropTable cascadeConstraints="true" tableName="translation_value"/>
+
+        <!-- Dropping name_id, description_id columns and add name, description text columns with the corresponding translates-->
+        <dropColumn tableName="code_catalog">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="code_catalog">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Code catalog: language -->
+        <update  tableName="code_catalog">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Language&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Nyelv&quot;}}]"
+            />
+            <where>key='language'</where>
+        </update >
+
+        <dropColumn tableName="code_catalog_entry">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="code_catalog_entry">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Code catalog entry: hu -->
+        <update  tableName="code_catalog_entry">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Hungarian&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Magyar&quot;}}]"
+            />
+            <where>key='hu'</where>
+        </update >
+        <!-- Code catalog entry: en -->
+        <update  tableName="code_catalog_entry">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;English&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Angol&quot;}}]"
+            />
+            <where>key='en'</where>
+        </update >
+
+        <!-- Authority -->
+        <dropColumn tableName="authority">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="authority">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Authority: user/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save user&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználó mentése&quot;}}]"
+            />
+            <where>path='user/save'</where>
+        </update >
+        <!-- Authority: user/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get user&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználó lekérése&quot;}}]"
+            />
+            <where>path='user/get'</where>
+        </update >
+        <!-- Authority: user/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update user&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználó módosítása&quot;}}]"
+            />
+            <where>path='user/update'</where>
+        </update >
+        <!-- Authority: user/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search users&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználók keresése&quot;}}]"
+            />
+            <where>path='user/search'</where>
+        </update >
+        <!-- Authority: role/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save role&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Szerepkör mentése&quot;}}]"
+            />
+            <where>path='role/save'</where>
+        </update >
+        <!-- Authority: role/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get role&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Szerepkör lekérése&quot;}}]"
+            />
+            <where>path='role/get'</where>
+        </update >
+        <!-- Authority: role/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update role&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Szerepkör módosítása&quot;}}]"
+            />
+            <where>path='role/update'</where>
+        </update >
+        <!-- Authority: role/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search roles&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Szerepkörök keresése&quot;}}]"
+            />
+            <where>path='role/search'</where>
+        </update >
+        <!-- Authority: authority/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save authority&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Jog mentése&quot;}}]"
+            />
+            <where>path='authority/save'</where>
+        </update >
+        <!-- Authority: authority/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get authority&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Jog lekérése&quot;}}]"
+            />
+            <where>path='authority/get'</where>
+        </update >
+        <!-- Authority: authority/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update authority&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Jog módosítása&quot;}}]"
+            />
+            <where>path='authority/update'</where>
+        </update >
+        <!-- Authority: authority/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search authorities&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Jogok keresése&quot;}}]"
+            />
+            <where>path='authority/search'</where>
+        </update >
+        <!-- Authority: codecatalog/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save code catalog&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár mentése&quot;}}]"
+            />
+            <where>path='codecatalog/save'</where>
+        </update >
+        <!-- Authority: codecatalog/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get code catalog&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár lekérése&quot;}}]"
+            />
+            <where>path='codecatalog/get'</where>
+        </update >
+        <!-- Authority: codecatalog/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update code catalog&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár módosítása&quot;}}]"
+            />
+            <where>path='codecatalog/update'</where>
+        </update >
+        <!-- Authority: codecatalog/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search code catalogs&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótárak keresése&quot;}}]"
+            />
+            <where>path='codecatalog/search'</where>
+        </update >
+        <!-- Authority: codecatalogentry/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save code catalog entry&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár elem mentése&quot;}}]"
+            />
+            <where>path='codecatalogentry/save'</where>
+        </update >
+        <!-- Authority: codecatalogentry/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get code catalog entry&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár elem lekérése&quot;}}]"
+            />
+            <where>path='codecatalogentry/get'</where>
+        </update >
+        <!-- Authority: codecatalogentry/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update code catalog entry&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár elem módosítása&quot;}}]"
+            />
+            <where>path='codecatalogentry/update'</where>
+        </update >
+        <!-- Authority: codecatalogentry/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search code catalog entries&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár elemek keresése&quot;}}]"
+            />
+            <where>path='codecatalogentry/search'</where>
+        </update >
+        <!-- Authority: systemparameter/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save system parameter&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter mentése&quot;}}]"
+            />
+            <where>path='systemparameter/save'</where>
+        </update >
+        <!-- Authority: systemparameter/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get system parameter&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter lekérése&quot;}}]"
+            />
+            <where>path='systemparameter/get'</where>
+        </update >
+        <!-- Authority: systemparameter/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update system parameter&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter módosítása&quot;}}]"
+            />
+            <where>path='systemparameter/update'</where>
+        </update >
+        <!-- Authority: systemparameter/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search system parameters&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméterek keresése&quot;}}]"
+            />
+            <where>path='systemparameter/search'</where>
+        </update >
+        <!-- Authority: systemparametervalue/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save system parameter value&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter érték mentése&quot;}}]"
+            />
+            <where>path='systemparametervalue/save'</where>
+        </update >
+        <!-- Authority: systemparametervalue/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get system parameter value&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter érték lekérése&quot;}}]"
+            />
+            <where>path='systemparametervalue/get'</where>
+        </update >
+        <!-- Authority: systemparametervalue/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update system parameter value&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter érték módosítása&quot;}}]"
+            />
+            <where>path='systemparametervalue/update'</where>
+        </update >
+        <!-- Authority: systemparametervalue/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search system parameter values&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter értékek keresése&quot;}}]"
+            />
+            <where>path='systemparametervalue/search'</where>
+        </update >
+        <!-- Authority: template/search -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Search templates&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablonok keresése&quot;}}]"
+            />
+            <where>path='template/search'</where>
+        </update >
+        <!-- Authority: template/save -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Save template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon mentése&quot;}}]"
+            />
+            <where>path='template/save'</where>
+        </update >
+        <!-- Authority: template/get -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Get template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon lekérése&quot;}}]"
+            />
+            <where>path='template/get'</where>
+        </update >
+        <!-- Authority: template/update -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Update template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon módosítása&quot;}}]"
+            />
+            <where>path='template/update'</where>
+        </update >
+        <!-- Authority: template/upload -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Upload template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon feltöltése&quot;}}]"
+            />
+            <where>path='template/upload'</where>
+        </update >
+        <!-- Authority: template/download -->
+        <update  tableName="authority">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Download template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon letöltése&quot;}}]"
+            />
+            <where>path='template/download'</where>
+        </update >
+
+        <dropColumn tableName="authority_category">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="authority_category">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Authority category: security -->
+        <update  tableName="authority_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Security&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Biztonság&quot;}}]"
+            />
+            <where>key='security'</where>
+        </update >
+        <!-- Authority category: codecatalog -->
+        <update  tableName="authority_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Code catalog&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kódszótár&quot;}}]"
+            />
+            <where>key='codecatalog'</where>
+        </update >
+        <!-- Authority category: systemparameter -->
+        <update  tableName="authority_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;System parameter&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter&quot;}}]"
+            />
+            <where>key='systemparameter'</where>
+        </update >
+        <!-- Authority category: template -->
+        <update  tableName="authority_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Template&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablon&quot;}}]"
+            />
+            <where>key='template'</where>
+        </update >
+
+        <dropColumn tableName="authority_sub_category">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="authority_sub_category">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Authority sub category: users -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Users&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználók&quot;}}]"
+            />
+            <where>key='users'</where>
+        </update >
+        <!-- Authority sub category: roles -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Roles&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Szerepkörök&quot;}}]"
+            />
+            <where>key='roles'</where>
+        </update >
+        <!-- Authority sub category: authorities -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Authorities&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Jogok&quot;}}]"
+            />
+            <where>key='authorities'</where>
+        </update >
+        <!-- Authority sub category: codecatalogs -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Code catalogs&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kód szótárak&quot;}}]"
+            />
+            <where>key='codecatalogs'</where>
+        </update >
+        <!-- Authority sub category: codecatalogentries -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Code catalog entries&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kód szótár elemek&quot;}}]"
+            />
+            <where>key='codecatalogentries'</where>
+        </update >
+        <!-- Authority sub category: systemparameter -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;System parameter&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Rendszerparaméter&quot;}}]"
+            />
+            <where>key='systemparameter'</where>
+        </update >
+        <!-- Authority sub category: templates -->
+        <update  tableName="authority_sub_category">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Templates&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Sablonok&quot;}}]"
+            />
+            <where>key='templates'</where>
+        </update >
+
+
+        <dropColumn tableName="document_template">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="document_template">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+
+        <dropColumn tableName="role">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="role">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- Role name: admin -->
+        <update  tableName="role">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Admin&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Admin&quot;}}]"
+            />
+            <where>key='admin'</where>
+        </update >
+        <!-- Role description: admin -->
+        <update  tableName="role">
+            <column
+                    name="description"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Default Admin role&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Alapértelmezett Admin szerepkör&quot;}}]"
+            />
+            <where>key='admin'</where>
+        </update >
+
+
+        <dropColumn tableName="system_parameter">
+            <column name="name_id"/>
+            <column name="description_id"/>
+        </dropColumn>
+        <addColumn  tableName="system_parameter">
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+        </addColumn >
+        <!-- System parameter: language -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Language&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Nyelv&quot;}}]"
+            />
+            <where>key='language'</where>
+        </update >
+        <!-- System parameter: pageSize -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Page size&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Lap méret&quot;}}]"
+            />
+            <where>key='pageSize'</where>
+        </update >
+        <!-- System parameter: coreActionRootURL -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Core action root URL&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Core action root url-je&quot;}}]"
+            />
+            <where>key='coreActionRootURL'</where>
+        </update >
+        <!-- System parameter: password_must_change_password name -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Must change password&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kötelező jelszó változtatás&quot;}}]"
+            />
+            <where>key='password_must_change_password'</where>
+        </update >
+        <!-- System parameter: password_must_change_password description-->
+        <update  tableName="system_parameter">
+            <column
+                    name="description"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Given in days&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Napban kell megadni&quot;}}]"
+            />
+            <where>key='password_must_change_password'</where>
+        </update >
+        <!-- System parameter: password_lock name -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Password lock&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Felhasználó zárolás&quot;}}]"
+            />
+            <where>key='password_lock'</where>
+        </update >
+        <!-- System parameter: password_lock description-->
+        <update  tableName="system_parameter">
+            <column
+                    name="description"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Given in minutes&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Percben kell megadni&quot;}}]"
+            />
+            <where>key='password_lock'</where>
+        </update >
+        <!-- System parameter: passwordMinLength -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Minimum length of the password&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;A jelszó minimális hossza&quot;}}]"
+            />
+            <where>key='passwordMinLength'</where>
+        </update >
+        <!-- System parameter: passwordMaxLength -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Maximum length of the password&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;A jelszó maximális hossza&quot;}}]"
+            />
+            <where>key='passwordMaxLength'</where>
+        </update >
+        <!-- System parameter: passwordMinNumberCount -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Minimum count of numeric characters&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Számjegyek minimális száma&quot;}}]"
+            />
+            <where>key='passwordMinNumberCount'</where>
+        </update >
+        <!-- System parameter: passwordMinCapitalLetterCount -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Minimum count of capital letters&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Nagybetűk minimális száma&quot;}}]"
+            />
+            <where>key='passwordMinCapitalLetterCount'</where>
+        </update >
+        <!-- System parameter: passwordMinSmallLetterCount -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Minimum count of small letters&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kisbetűk minimális száma&quot;}}]"
+            />
+            <where>key='passwordMinSmallLetterCount'</where>
+        </update >
+        <!-- System parameter: passwordMinSpecCharCount -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Minimum count of small letters&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Kisbetűk minimális száma&quot;}}]"
+            />
+            <where>key='passwordMinSpecCharCount'</where>
+        </update >
+        <!-- System parameter: openSidebar -->
+        <update  tableName="system_parameter">
+            <column
+                    name="name"
+                    value="[{&quot;text&quot;: {&quot;en&quot;: &quot;Sidebar menu be opened&quot;}}, {&quot;text&quot;: {&quot;hu&quot;: &quot;Oldalsáv menu legyen kinyitva&quot;}}]"
+            />
+            <where>key='openSidebar'</where>
+        </update >
+
+    </changeSet>
+</databaseChangeLog>
