@@ -38,7 +38,6 @@ public class TranslationConverter implements AttributeConverter<Translation, Str
     @Override
     public Translation convertToEntityAttribute(String dbData) {
 
-//        [{"text": {"language": "en", "value": "Hungarian"}}, {"text": {"language": "hu", "value": "Magyar"}}]
 //        [{"text": {"en": "Hungarian"}}, {"text": {"hu": "Magyar"}}]
         if (dbData != null) {
             List<Translation> list = Arrays.asList(mapper.readValue(dbData, Translation[].class));
